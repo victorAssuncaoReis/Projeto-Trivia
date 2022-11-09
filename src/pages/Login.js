@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Button from '../components/Button';
 import { fetchApi } from '../redux/actions';
 
-
 class Login extends React.Component {
   state = {
     email: '',
