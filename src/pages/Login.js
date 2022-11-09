@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Button from '../components/Button';
-// import PropTypes from 'prop-types';
+import { fetchApi } from '../redux/actions';
 
 class Login extends React.Component {
   state = {
@@ -33,12 +34,11 @@ class Login extends React.Component {
     }, () => this.validateEntry());
   };
 
-  // handleClick = () => {
-  //   const { email } = this.state;
-  //   const { dispatch, history } = this.props;
-  //   dispatch(validname(email));
-  //   history.push('/carteira');
-  // };
+  handleClick = () => {
+    const { dispatch, history } = this.props;
+    dispatch(fetchApi());
+    history.push('/game');
+  };
 
   render() {
     const { email, name, isDisabled } = this.state;
@@ -74,9 +74,11 @@ class Login extends React.Component {
   }
 }
 
-// Login.propTypes = {
-//   dispatch: PropTypes.func.isRequired,
-//   history: PropTypes.shape().isRequired,
-// };
+Login.propTypes = {
+  dispatch: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+}.isRequired;
 
-export default connect(null)(Login);
+export default connect()(Login);
