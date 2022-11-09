@@ -4,7 +4,7 @@ import './App.css';
 
 export default function App() {
   return (
-    // Primeiro commit
+    // Primeiro commit na release
     <div className="App">
       <header className="App-header">
         <img src={ logo } className="App-logo" alt="logo" />
