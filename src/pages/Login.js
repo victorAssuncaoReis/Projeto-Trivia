@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from '../components/Button';
+import { fetchApi } from '../redux/actions';
 
 class Login extends React.Component {
   state = {
@@ -13,13 +14,11 @@ class Login extends React.Component {
   validEmail = () => {
     const { email } = this.state;
     const regexValidation = /\S+@\S+\.\S+/;
-
     return regexValidation.test(email);
   };
 
   validateEntry = () => {
     const { name } = this.state;
-
     if (this.validEmail() && name.length > 0) {
       this.setState({ isDisabled: false });
     } else {
@@ -29,16 +28,20 @@ class Login extends React.Component {
 
   handleChange = ({ target }) => {
     const { name, value } = target;
-
     this.setState({
       [name]: value,
     }, () => this.validateEntry());
   };
 
-  handleClick = () => {
+  handleClickSettings = () => {
     const { history } = this.props;
-
     history.push('/settings');
+  };
+
+  handleClickGame = () => {
+    const { dispatch, history } = this.props;
+    dispatch(fetchApi());
+    history.push('/game');
   };
 
   render() {
@@ -47,9 +50,9 @@ class Login extends React.Component {
     return (
       <section>
         <Button
-          handleClick={ this.handleClick }
           btnName="Configurações"
           dataName="btn-settings"
+          handleClick={ this.handleClickSettings }
         />
         <input
           type="email"
@@ -71,6 +74,7 @@ class Login extends React.Component {
           disabled={ isDisabled }
           btnName="Jogar"
           dataName="btn-play"
+          handleClick={ this.handleClickGame }
         />
       </section>
     );
@@ -78,7 +82,10 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  history: PropTypes.shape().isRequired,
-};
+  dispatch: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+}.isRequired;
 
 export default connect()(Login);
