@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Button from '../components/Button';
 import { fetchApi } from '../redux/actions';
 
+
 class Login extends React.Component {
   state = {
     email: '',
@@ -19,7 +20,6 @@ class Login extends React.Component {
 
   validateEntry = () => {
     const { name } = this.state;
-
     if (this.validEmail() && name.length > 0) {
       this.setState({ isDisabled: false });
     } else {
@@ -34,7 +34,12 @@ class Login extends React.Component {
     }, () => this.validateEntry());
   };
 
-  handleClick = () => {
+  handleClickSettings = () => {
+    const { history } = this.props;
+    history.push('/settings');
+  };
+  
+  handleClickGame = () => {
     const { dispatch, history } = this.props;
     dispatch(fetchApi());
     history.push('/game');
@@ -42,34 +47,37 @@ class Login extends React.Component {
 
   render() {
     const { email, name, isDisabled } = this.state;
-    return (
-      <div>
-        <section>
-          <input
-            type="email"
-            name="email"
-            onChange={ this.handleChange }
-            placeholder="Qual é o seu e-mail do Gravatar?"
-            data-testid="input-gravatar-email"
-            value={ email }
-          />
-          <input
-            type="name"
-            name="name"
-            onChange={ this.handleChange }
-            placeholder="Qual é o seu nome?"
-            data-testid="input-player-name"
-            value={ name }
-          />
-          <Button
-            handleClick={ this.handleClick }
-            disabled={ isDisabled }
-            btnName="Jogar"
-            dataName="btn-play"
-          />
-        </section>
 
-      </div>
+    return (
+      <section>
+        <Button
+          btnName="Configurações"
+          dataName="btn-settings"
+          handleClick={ this.handleClickSettings }
+        />
+        <input
+          type="email"
+          name="email"
+          onChange={ this.handleChange }
+          placeholder="Qual é o seu e-mail do Gravatar?"
+          data-testid="input-gravatar-email"
+          value={ email }
+        />
+        <input
+          type="name"
+          name="name"
+          onChange={ this.handleChange }
+          placeholder="Qual é o seu nome?"
+          data-testid="input-player-name"
+          value={ name }
+        />
+        <Button
+          disabled={ isDisabled }
+          btnName="Jogar"
+          dataName="btn-play"
+          handleClick={ this.handleClickGame }
+        />
+      </section>
     );
   }
 }
