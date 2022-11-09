@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 class Button extends React.Component {
   render() {
     const { handleClick, btnName, disabled, dataName } = this.props;
+
     return (
       <div>
         <button
