@@ -44,7 +44,9 @@ class Login extends React.Component {
     const { name, email } = this.state;
     dispatch(saveLoginName(name));
     dispatch(saveLoginEmail(email));
-    history.push('/game');
+    setTimeout(() => {
+      history.push('/game');
+    }, '1000');
   };
 
   render() {

@@ -6,7 +6,6 @@ import Button from '../components/Button';
 
 class Game extends React.Component {
   state = {
-    token: '',
     category: [],
     rightAnswers: [],
     wrongAnswers: [],
@@ -15,14 +14,11 @@ class Game extends React.Component {
 
   componentDidMount() {
     const token = localStorage.getItem('token');
-    this.setState({ token }, () => this.getQuestions());
+    this.getQuestions(token);
   }
 
-  getQuestions = async () => {
-    const { history } = this.props;
-    const { token } = this.state;
+  getQuestions = async (token) => {
     try {
-      console.log(token);
       const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
       const response = await fetch(url);
       const data = await response.json();
@@ -35,7 +31,7 @@ class Game extends React.Component {
       });
     } catch (error) {
       localStorage.clear('token');
-      history.push('/');
+      window.location.replace('/');
     }
   };
 
@@ -73,8 +69,4 @@ Game.propTypes = {
   }),
 }.isRequired;
 
-const mapStateToProps = (state) => ({
-  tokenInfo: state.token.tokenInfo,
-});
-
-export default connect(mapStateToProps)(Game);
+export default connect()(Game);

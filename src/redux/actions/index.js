@@ -30,7 +30,7 @@ export function fetchApi() {
       const data = await response.json();
       const token = await data.token;
       localStorage.setItem('token', token);
-      dispatch(receiveApi(token));
+      dispatch(receiveApi(data));
     } catch (error) {
       dispatch(failedRequest(error));
     }
