@@ -1,6 +1,8 @@
 export const REQUEST_API = 'REQUEST_API';
 export const RECEIVE_API = 'RECEIVE_API';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
+export const SAVE_NAME = 'SAVE_NAME';
+export const SAVE_LOGIN_EMAIL = 'SAVE_LOGIN_INFO';
 
 export const requestApi = () => ({ type: 'REQUEST_API' });
 
@@ -24,3 +26,13 @@ export function fetchApi() {
     }
   };
 }
+
+export const saveLoginName = (loginName) => ({
+  type: SAVE_NAME,
+  payload: loginName,
+});
+
+export const saveLoginEmail = (loginEmail) => ({
+  type: SAVE_LOGIN_EMAIL,
+  payload: loginEmail,
+});
