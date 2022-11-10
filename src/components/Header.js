@@ -4,24 +4,32 @@ import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 
 class Header extends Component {
-  addHashToEmail = () => {
-    const { gravatarEmail } = this.props;
-    const withHash = md5(gravatarEmail).toString();
-    return `"${withHash}"`;
+  state = {
+    formatedEmail: '',
   };
+
+  componentDidMount() {
+    const { gravatarEmail } = this.props;
+    const hash = md5(gravatarEmail).toString();
+    const formating = `https://www.gravatar.com/avatar/${hash}`;
+    console.log(formating);
+
+    this.setState({ formatedEmail: formating });
+  }
 
   render() {
     const { name, score } = this.props;
-
+    const { formatedEmail } = this.state;
     return (
       <div>
+        {/* <h1>Renderizou o Header</h1> */}
         <img
           data-testid="header-profile-picture"
-          src={ this.addHashToEmail }
+          src={ formatedEmail }
           alt="user gravatar"
         />
         <h2 data-testid="header-player-name">{ name }</h2>
-        <h2 data-testid="header-score">{ score }</h2>
+        <h2 data-testid="header-score">{`Score: ${score}`}</h2>
       </div>
     );
   }
@@ -33,10 +41,11 @@ Header.propTypes = {
   name: PropTypes.string,
 }.isRequired;
 
-const mapStateToProps = (state) => ({ // state é o objeto do estado global
+const mapStateToProps = (state) => ({
   gravatarEmail: state.player.gravatarEmail,
   score: state.player.score,
   name: state.player.name,
 });
 
 export default connect(mapStateToProps)(Header);
+// export default Header;

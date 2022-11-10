@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from '../components/Button';
-import { fetchApi } from '../redux/actions';
+import { fetchApi, saveLoginName, saveLoginEmail } from '../redux/actions';
 
 class Login extends React.Component {
   state = {
@@ -40,7 +40,12 @@ class Login extends React.Component {
 
   handleClickGame = () => {
     const { dispatch, history } = this.props;
+    const { name, email } = this.state;
     dispatch(fetchApi());
+    dispatch(saveLoginName(name));
+    console.log(name); // OK
+    console.log('fez dispatch da saveLoginName'); // OK
+    dispatch(saveLoginEmail(email));
     history.push('/game');
   };
 
