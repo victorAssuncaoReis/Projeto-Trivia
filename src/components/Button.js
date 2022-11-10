@@ -28,8 +28,8 @@ Button.propTypes = {
 };
 Button.defaultProps = {
   handleClick: () => {},
-  disabled: false,
   btnName: null,
+  disabled: false,
   btnClass: '',
 };
 export default Button;
