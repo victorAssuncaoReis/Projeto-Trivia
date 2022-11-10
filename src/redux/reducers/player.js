@@ -2,7 +2,7 @@ import { SAVE_NAME, SAVE_LOGIN_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
-  assertions: '',
+  assertions: 0,
   score: 0,
   gravatarEmail: '',
 };
