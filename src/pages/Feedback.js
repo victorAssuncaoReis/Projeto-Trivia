@@ -7,7 +7,7 @@ import Button from '../components/Button';
 class Feedback extends React.Component {
   state = {
     scoreCuttOff: 3,
-   }
+  };
 
   handleClick = () => {
     const { history } = this.props;
@@ -35,7 +35,7 @@ class Feedback extends React.Component {
 }
 
 Feedback.propTypes = {
-assertions: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
