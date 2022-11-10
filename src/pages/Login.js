@@ -40,11 +40,9 @@ class Login extends React.Component {
 
   handleClickGame = () => {
     const { dispatch, history } = this.props;
-    const { name, email } = this.state;
     dispatch(fetchApi());
+    const { name, email } = this.state;
     dispatch(saveLoginName(name));
-    console.log(name); // OK
-    console.log('fez dispatch da saveLoginName'); // OK
     dispatch(saveLoginEmail(email));
     history.push('/game');
   };

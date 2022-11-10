@@ -19,6 +19,7 @@ class Button extends React.Component {
     );
   }
 }
+
 Button.propTypes = {
   handleClick: PropTypes.func,
   btnName: PropTypes.node,
@@ -26,10 +27,12 @@ Button.propTypes = {
   dataName: PropTypes.string.isRequired,
   btnClass: PropTypes.string,
 };
+
 Button.defaultProps = {
   handleClick: () => {},
   disabled: false,
   btnName: null,
   btnClass: '',
 };
+
 export default Button;

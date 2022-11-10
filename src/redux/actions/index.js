@@ -11,6 +11,16 @@ export const receiveApi = (payload) => (
 
 export const failedRequest = (error) => ({ type: FAILED_REQUEST, payload: error });
 
+export const saveLoginName = (loginName) => ({
+  type: SAVE_NAME,
+  payload: loginName,
+});
+
+export const saveLoginEmail = (loginEmail) => ({
+  type: SAVE_LOGIN_EMAIL,
+  payload: loginEmail,
+});
+
 export function fetchApi() {
   return async (dispatch) => {
     dispatch(requestApi());
@@ -26,13 +36,3 @@ export function fetchApi() {
     }
   };
 }
-
-export const saveLoginName = (loginName) => ({
-  type: SAVE_NAME,
-  payload: loginName,
-});
-
-export const saveLoginEmail = (loginEmail) => ({
-  type: SAVE_LOGIN_EMAIL,
-  payload: loginEmail,
-});
