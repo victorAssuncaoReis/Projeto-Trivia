@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux'; 
@@ -62,18 +62,37 @@ describe('testa a página Login', () => {
 
     expect(pathname).toBe('/settings');
   })
+  test('se ao clicar no botao "Jogar" vai para a rota "/game"', async () => {
+    
+    const { history } = renderWithRouterAndRedux(<App />);
 
-  test('se ao clicar no botao"Jogar" vai para a rota"/game"', () => {
-    const { history } = renderWithRouterAndRedux(<App/>);
     const inputEmail = screen.getByTestId('input-gravatar-email');
     const inputName = screen.getByTestId('input-player-name');
     const buttonEnter = screen.getByTestId('btn-play');
-
+    
     userEvent.type(inputEmail, 'tulio@barros.com');
-    userEvent.type(inputName, 'tulio');
+    userEvent.type(inputName, 'tulio2121');
     userEvent.click(buttonEnter);
-    const { pathname } = history.location;
+    // setTimeout(() => { console.log('ok') }, 4000);
 
-    expect(pathname).toBe('/game');
+    await waitFor (() => expect(history.location.pathname).toBe('/game'), { timeout: 3000 });
+  
+    // expect(buttonEnter).toBeInTheDocument();
   })
+
+  // test('se ao clicar no botão, o localstorage é atualizado', () => {
+  //   renderWithRouterAndRedux(<App />)
+
+  //   const inputEmail = screen.getByTestId('input-gravatar-email');
+  //   const inputName = screen.getByTestId('input-player-name');
+  //   const buttonEnter = screen.getByTestId('btn-play');
+
+  //   userEvent.type(inputEmail, 'tulio@barros.com');
+  //   userEvent.type(inputName, 'tulio');
+  //   userEvent.click(buttonEnter);
+  //   setTimeout(() => { console.log('ok') }, 4000);
+
+  //   expect(localStorage.getItem.length).toBe(1);
+  //   expect(localStorage.getItem).toBeCalledWith('token')
+  // })
 })
