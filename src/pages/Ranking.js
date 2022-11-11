@@ -1,6 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+
+const tres = 3;
+const quinze = 15;
 
 class Ranking extends React.Component {
   onClick = () => {
@@ -9,8 +13,16 @@ class Ranking extends React.Component {
   };
 
   render() {
+    // ORDENANDO EM ORDEM DESCRESCENTE
+    const points = [quinze, 100, 1, 0, tres, 100, 1];
+    const order = () => points.sort((a, b) => a - b);
+    console.log(order());
+    const numbers = order();
+    // ===============================
+    const { name, score } = this.props;
     return (
       <div>
+        <h1>RANKING</h1>
         <Header />
         <button
           type="button"
@@ -19,7 +31,13 @@ class Ranking extends React.Component {
         >
           HOME
         </button>
-        <h1>RANKING</h1>
+        <h2>
+          { name }
+        </h2>
+        <h2>
+          { score }
+        </h2>
+        <h3>{ numbers }</h3>
       </div>
     );
   }
@@ -29,6 +47,13 @@ Ranking.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  score: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
-export default Ranking;
+const mapStateToProps = (state) => ({
+  name: state.player.name,
+  pontos: state.player.score,
+});
+
+export default connect(mapStateToProps)(Ranking);
