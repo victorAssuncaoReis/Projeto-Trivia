@@ -18,20 +18,20 @@ class Game extends React.Component {
   }
 
   getQuestions = async (token) => {
-    try {
-      const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
-      const response = await fetch(url);
-      const data = await response.json();
-      const questions = data.results;
+    const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    const questions = data.results;
+    if (questions.length === 0) {
+      localStorage.clear('token');
+      window.location.replace('/');
+    } else {
       this.setState({
         category: questions.map((el) => el.category),
         rightAnswers: questions.map((el) => el.correct_answer),
         wrongAnswers: questions.map((el) => el.incorrect_answers),
         question: questions.map((el) => el.question),
       });
-    } catch (error) {
-      localStorage.clear('token');
-      window.location.replace('/');
     }
   };
 
@@ -62,11 +62,4 @@ class Game extends React.Component {
   }
 }
 
-Game.propTypes = {
-  dispatch: PropTypes.func,
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
-}.isRequired;
-
-export default connect()(Game);
+export default Game;
