@@ -7,8 +7,8 @@ class Game extends React.Component {
   state = {
     index: 0,
     loading: true,
-    question: [],
-    mixAnswers: [],
+    questions: [],
+    answers: [],
     changeClass: false,
   };
 
@@ -22,46 +22,43 @@ class Game extends React.Component {
     const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
     const response = await fetch(url);
     const data = await response.json();
-    const questions = data.results;
-
-    if (questions.length === 0) {
-      localStorage.clear('token');
+    const trivia = data.results;
+    if (trivia.length === 0) {
+      localStorage.removeItem('token');
       window.location.replace('/');
     } else {
       this.setState({
         loading: false,
-        question: questions[index],
+        questions: trivia[index],
+        answers: [...trivia[index]
+          .incorrect_answers, trivia[index].correct_answer],
         changeClass: false,
       }, () => this.shuffleAnswers());
     }
   };
 
   shuffleAnswers = () => {
-    const { question: {
-      incorrect_answers: incorrectAnswers,
-      correct_answer: correctAnswer } } = this.state;
-    const allAnswers = [...incorrectAnswers];
-    const magicNumber = 5;
-    const randomIndex = Math.floor(Math.random() * magicNumber);
-    allAnswers.splice(randomIndex, 0, correctAnswer);
-    this.setState({ mixAnswers: allAnswers });
-  };
-
+    const { answers } = this.state;
+    const magicNumber = 0.5;
+    const mix = answers.sort(() => Math.random() - magicNumber);
+    this.setState({ answers: mix });
+  }; // https://javascript.info/task/shuffle
+  
   handleClick = () => {
     this.setState({ changeClass: true });
   };
-
+  
   render() {
-    const { loading,
-      mixAnswers,
+    const {
+      loading,
+      answers,
       changeClass,
-      question: {
+      questions: {
         category,
         question,
         correct_answer: correctAnswer,
       },
     } = this.state;
-    console.log(mixAnswers);
     return (
       <>
         <Header />
@@ -72,7 +69,7 @@ class Game extends React.Component {
               <h3 data-testid="question-category">{category}</h3>
               <p data-testid="question-text">{question}</p>
               <div data-testid="answer-options">
-                { mixAnswers.map((el, i) => (
+                { answers.map((el, i) => (
                   el === correctAnswer
                     ? (
                       <Button
