@@ -43,11 +43,11 @@ class Game extends React.Component {
     const mix = answers.sort(() => Math.random() - magicNumber);
     this.setState({ answers: mix });
   }; // https://javascript.info/task/shuffle
-  
+
   handleClick = () => {
     this.setState({ changeClass: true });
   };
-  
+
   render() {
     const {
       loading,
