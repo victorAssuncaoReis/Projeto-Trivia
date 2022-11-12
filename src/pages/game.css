@@ -1,0 +1,24 @@
+.btn-gray {
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 100px;
+  height: 64px;
+  width: 519px;
+}
+
+.btn-right {
+  background-color: white;
+  border: 3px solid rgb(6, 240, 15);
+  border-radius: 100px;
+  height: 64px;
+  width: 519px;
+}
+
+.btn-wrong {
+  background-color: white;
+  border: 3px solid red;
+  border-radius: 100px;
+  box-shadow: 2px;
+  height: 64px;
+  width: 519px;
+}

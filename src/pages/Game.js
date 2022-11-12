@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Button from '../components/Button';
+import './game.css';
 
 class Game extends React.Component {
   state = {
@@ -8,6 +9,7 @@ class Game extends React.Component {
     loading: true,
     questions: [],
     answers: [],
+    changeClass: false,
   };
 
   componentDidMount() {
@@ -30,6 +32,7 @@ class Game extends React.Component {
         questions: trivia[index],
         answers: [...trivia[index]
           .incorrect_answers, trivia[index].correct_answer],
+        changeClass: false,
       }, () => this.shuffleAnswers());
     }
   };
@@ -41,10 +44,15 @@ class Game extends React.Component {
     this.setState({ answers: mix });
   }; // https://javascript.info/task/shuffle
 
+  handleClick = () => {
+    this.setState({ changeClass: true });
+  };
+
   render() {
     const {
       loading,
       answers,
+      changeClass,
       questions: {
         category,
         question,
@@ -65,6 +73,7 @@ class Game extends React.Component {
                   el === correctAnswer
                     ? (
                       <Button
+                        btnClass={ changeClass ? 'right' : 'gray' }
                         key={ i }
                         btnName={ el }
                         dataName="correct-answer"
@@ -73,6 +82,7 @@ class Game extends React.Component {
                     )
                     : (
                       <Button
+                        btnClass={ changeClass ? 'wrong' : 'gray' }
                         key={ i }
                         btnName={ el }
                         dataName={ `wrong-answer-${i}` }
@@ -87,5 +97,4 @@ class Game extends React.Component {
     );
   }
 }
-
 export default Game;
