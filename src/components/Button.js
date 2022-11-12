@@ -5,17 +5,15 @@ class Button extends React.Component {
   render() {
     const { handleClick, btnName, disabled, dataName, btnClass } = this.props;
     return (
-      <div>
-        <button
-          type="button"
-          className={ `btn-${btnClass}` }
-          disabled={ disabled }
-          onClick={ handleClick }
-          data-testid={ dataName }
-        >
-          {btnName}
-        </button>
-      </div>
+      <button
+        type="button"
+        className={ `btn-${btnClass}` }
+        disabled={ disabled }
+        onClick={ handleClick }
+        data-testid={ dataName }
+      >
+        {btnName}
+      </button>
     );
   }
 }

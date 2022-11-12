@@ -4,10 +4,10 @@ import Button from '../components/Button';
 
 class Game extends React.Component {
   state = {
-    category: [],
-    rightAnswers: [],
-    wrongAnswers: [],
-    question: [],
+    index: 0,
+    loading: true,
+    questions: [],
+    answers: [],
   };
 
   componentDidMount() {
@@ -16,46 +16,74 @@ class Game extends React.Component {
   }
 
   getQuestions = async (token) => {
+    const { index } = this.state;
     const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
     const response = await fetch(url);
     const data = await response.json();
-    const questions = data.results;
-    if (questions.length === 0) {
-      localStorage.clear('token');
+    const trivia = data.results;
+    if (trivia.length === 0) {
+      localStorage.removeItem('token');
       window.location.replace('/');
     } else {
       this.setState({
-        category: questions.map((el) => el.category),
-        rightAnswers: questions.map((el) => el.correct_answer),
-        wrongAnswers: questions.map((el) => el.incorrect_answers),
-        question: questions.map((el) => el.question),
-      });
+        loading: false,
+        questions: trivia[index],
+        answers: [...trivia[index]
+          .incorrect_answers, trivia[index].correct_answer],
+      }, () => this.shuffleAnswers());
     }
   };
 
+  shuffleAnswers = () => {
+    const { answers } = this.state;
+    const magicNumber = 0.5;
+    const mix = answers.sort(() => Math.random() - magicNumber);
+    this.setState({ answers: mix });
+  }; // https://javascript.info/task/shuffle
+
   render() {
-    const { category, rightAnswers, wrongAnswers,
-      question } = this.state;
+    const {
+      loading,
+      answers,
+      questions: {
+        category,
+        question,
+        correct_answer: correctAnswer,
+      },
+    } = this.state;
     return (
-      <div>
+      <>
         <Header />
-        <h3 data-testid="question-category">{category}</h3>
-        <p data-testid="question-text">{question}</p>
-        <div data-testid="answer-options">
-          { rightAnswers.map((el, i) => (
-            <Button
-              key={ i }
-              btnName={ el[0] }
-              dataName="correct-answer"
-            />))}
-          { wrongAnswers.map((el, i) => (
-            <Button
-              key={ i }
-              btnName={ el }
-              dataName={ `wrong-answer-${i}` }
-            />))}
-        </div>
-      </div>
+        { loading
+          ? <h1>Carregando...</h1>
+          : (
+            <>
+              <h3 data-testid="question-category">{category}</h3>
+              <p data-testid="question-text">{question}</p>
+              <div data-testid="answer-options">
+                { answers.map((el, i) => (
+                  el === correctAnswer
+                    ? (
+                      <Button
+                        key={ i }
+                        btnName={ el }
+                        dataName="correct-answer"
+                        handleClick={ this.handleClick }
+                      />
+                    )
+                    : (
+                      <Button
+                        key={ i }
+                        btnName={ el }
+                        dataName={ `wrong-answer-${i}` }
+                        handleClick={ this.handleClick }
+                      />
+                    )
+                ))}
+              </div>
+            </>
+          )}
+      </>
     );
   }
 }
