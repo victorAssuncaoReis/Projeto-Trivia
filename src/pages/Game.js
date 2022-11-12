@@ -1,12 +1,13 @@
 import React from 'react';
 import Header from '../components/Header';
-/* import Button from '../components/Button'; */
 
 class Game extends React.Component {
   state = {
-    question: [],
     index: 0,
-    loading: false,
+    loading: true,
+    question: [],
+    answers: [],
+    btns: false,
   };
 
   componentDidMount() {
@@ -21,95 +22,99 @@ class Game extends React.Component {
     const data = await response.json();
     const questions = data.results;
     if (questions.length === 0) {
-      localStorage.clear('token');
+      localStorage.removeItem('token');
       window.location.replace('/');
     } else {
       this.setState({
         question: questions[index],
-        loading: true,
+      }, () => {
+        const { question } = this.state;
+        const questionMapToWrong = question.incorrect_answers.map((ele, i) => {
+          const wrongObject = {
+            answer: ele,
+            dataTestId: `wrong-answer-${i}`,
+            className: 'wrong-class',
+          };
+          return wrongObject;
+        });
+        const correct = {
+          answer: question.correct_answer,
+          className: 'correct-class',
+          btn: true,
+          dataTestId: 'correct-answer' };
+        this.setState({
+          answers: this.shuffle([...questionMapToWrong, correct]),
+          loading: false,
+        });
       });
     }
   };
 
+  handleClick = () => {
+    this.setState({
+      btns: true,
+    });
+  };
+
+  shuffle = (array) => {
+    const shuffledArray = [];
+    const usedIndexes = [];
+
+    let i = 0;
+    while (i < array.length) {
+      const randomNumber = Math.floor(Math.random() * array.length);
+      if (!usedIndexes.includes(randomNumber)) {
+        shuffledArray.push(array[randomNumber]);
+        usedIndexes.push(randomNumber);
+        i += 1;
+      }
+    }
+    return shuffledArray;
+  };
+  /*   shuffleAnswers = (array, string) => {
+    const allAnswers = array;
+    const magicNumber = 5;
+    const randomIndex = Math.floor(Math.random() * magicNumber);
+    allAnswers.splice(randomIndex, 0, string);
+    return allAnswers;
+  }; */
+
   render() {
-    const { question, loading } = this.state;
+    const {
+      loading,
+      answers,
+      btns,
+      question: {
+        category,
+        question,
+      },
+    } = this.state;
     return (
-      <div>
-        { loading
-          ? (
-            <div>
-              <Header />
-              <h3 data-testid="question-category">{ question.category }</h3>
-              <p data-testid="question-text">{ question.question }</p>
-              <div data-testid="answer-options">
-                {/*  { allAnswers.map((el, i) => (
-                  <Button
-                    type="button"
-                    key={ i }
-                    btnName={ el[i] }
-                    dataName="correct-answer"
-                  >
-                    { el[i] }
-                  </Button>))} */}
-              </div>
-            </div>)
-          : <div>{' '}</div> }
-      </div>
-    );
-  }
-}
-
-export default Game;
-
-/*   randomOrder() {
-    const myNum = 0.5;
-    return (Math.round(Math.random()) - myNum);
-  }
-  Criar um state de index?
-
-  const correctAnswer = trivia[index].correct_answer;
-  const wrongAnswers = trivia[index].incorrect_answers[0];
-
-  const renderCorrect = (
-      <button
-        type="button"
-        data-testid="correct-answer"
-        className="correct-answer"
-      >
-        {rightAnswer}
-      </button>);
-
-  const mapWrongAnsers = wrongAnwswers.map((answer, index) => (
-      <button
-        type="button"
-        key={ index }
-        data-testid={ `wrong-answer${index}` }
-      >
-        {answer}
-      </button>
-    ));
-
-  }
-  const allAnswers = [];
-  allAnswers.push(correctAnswer, wrongAnswers);
-
-  allAnswers.sort(this.randomOrder);
-
-  return (
-      <div>
+      <>
         <Header />
-        {trivia
-        && (
-          <main>
-            <h1 data-testid="question-category">{trivia.category}</h1>
-            <h2 data-testid="question-text">{trivia.question}</h2>
-            <div data-testid="answer-options">
-              {allAnswers.map((button) => button)}
-            </div>
-          </main>
-        )}
-      </div>
+        { loading
+          ? <h1>Carregando...</h1>
+          : (
+            <>
+              <h3 data-testid="question-category">{category}</h3>
+              <p data-testid="question-text">{question}</p>
+              <div data-testid="answer-options">
+                { answers.map((el) => (
+                  <button
+                    type="button"
+                    key={ el.dataTestId }
+                    data-testid={ el.dataTestId }
+                    onClick={ this.handleClick }
+                    name={ el.dataTestId }
+                    className={ btns ? el.className : 'btn-standard' }
+                  >
+                    { el.answer }
+                  </button>)) }
+              </div>
+            </>
+          )}
+      </>
     );
   }
 }
-  */
+export default Game;
