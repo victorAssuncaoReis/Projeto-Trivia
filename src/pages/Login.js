@@ -52,7 +52,7 @@ class Login extends React.Component {
     const { email, name, isDisabled } = this.state;
 
     return (
-      <section>
+      <section className="login">
         <Button
           btnName="Configurações"
           dataName="btn-settings"

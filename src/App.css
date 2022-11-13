@@ -1,4 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@100;200;300;400;500;600;700;800;900&family=Modern+Antiqua&display=swap') ;
+
 body {
+  background-attachment: fixed;
+  background-image: url('./images/background-login.png');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: 100%;
   display: flex;
-  justify-content: flex-start;
+  font-family: sans-serif , Epilogue , Modern Antiqua , Helvetica , Arial , Verdana;
+  min-height: 97vh;
 }
