@@ -9,11 +9,17 @@ class Feedback extends React.Component {
     scoreCuttOff: 3,
   };
 
-  handleClick = () => {
+
+   handleClick = (route) => {
     const { history } = this.props;
 
-    history.push('/');
+    history.push(route);
+
   };
+  
+    // handleClick = () => {
+    // const { history } = this.props;
+    // history.push('/');
 
   render() {
     const { assertions, score } = this.props;
@@ -28,10 +34,22 @@ class Feedback extends React.Component {
         }
 
         <Button
-          handleClick={ this.handleClick }
+
+          handleClick={ () => this.handleClick('/') }
           btnName="Jogar novamente"
           dataName="btn-play-again"
         />
+        <Button
+          handleClick={ () => this.handleClick('/ranking') }
+          btnName="Ranking"
+          dataName="btn-ranking"
+        />
+
+          // handleClick={ this.handleClick }
+          // btnName="Jogar novamente"
+          // dataName="btn-play-again"
+        />
+
       </>
 
         <div>
@@ -43,6 +61,7 @@ class Feedback extends React.Component {
           <h2 data-testid="feedback-total-question">{ assertions }</h2>
         </div>
       </div>
+
     );
   }
 }
