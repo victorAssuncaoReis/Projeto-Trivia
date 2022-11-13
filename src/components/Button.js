@@ -5,20 +5,19 @@ class Button extends React.Component {
   render() {
     const { handleClick, btnName, disabled, dataName, btnClass } = this.props;
     return (
-      <div>
-        <button
-          type="button"
-          className={ `btn-${btnClass}` }
-          disabled={ disabled }
-          onClick={ handleClick }
-          data-testid={ dataName }
-        >
-          {btnName}
-        </button>
-      </div>
+      <button
+        type="button"
+        className={ `btn-${btnClass}` }
+        disabled={ disabled }
+        onClick={ handleClick }
+        data-testid={ dataName }
+      >
+        {btnName}
+      </button>
     );
   }
 }
+
 Button.propTypes = {
   handleClick: PropTypes.func,
   btnName: PropTypes.node,
@@ -26,10 +25,12 @@ Button.propTypes = {
   dataName: PropTypes.string.isRequired,
   btnClass: PropTypes.string,
 };
+
 Button.defaultProps = {
   handleClick: () => {},
   btnName: null,
   disabled: false,
   btnClass: '',
 };
+
 export default Button;
