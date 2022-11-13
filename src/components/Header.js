@@ -12,7 +12,7 @@ class Header extends Component {
     const { gravatarEmail } = this.props;
     const hash = md5(gravatarEmail).toString();
     const formating = `https://www.gravatar.com/avatar/${hash}`;
-    console.log(formating);
+    /*     console.log(formating); */
 
     this.setState({ formatedEmail: formating });
   }
@@ -43,7 +43,7 @@ Header.propTypes = {
 
 const mapStateToProps = (state) => ({
   gravatarEmail: state.player.gravatarEmail,
-  score: state.player.score,
+  score: state.game.score,
   name: state.player.name,
 });
 
