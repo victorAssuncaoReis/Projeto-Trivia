@@ -9,32 +9,31 @@ class Feedback extends React.Component {
     scoreCuttOff: 3,
   };
 
-
-   handleClick = (route) => {
+  handleClick = (route) => {
     const { history } = this.props;
 
     history.push(route);
-
   };
-  
-    // handleClick = () => {
-    // const { history } = this.props;
-    // history.push('/');
+
+  // handleClick = () => {
+  // const { history } = this.props;
+  // history.push('/');
 
   render() {
     const { assertions, score } = this.props;
     const { scoreCuttOff } = this.state;
     return (
-      <>
+      <div>
         <Header />
         {
           assertions < scoreCuttOff
             ? (<h2 data-testid="feedback-text">Could be better...</h2>)
             : (<h2 data-testid="feedback-text">Well Done!</h2>)
         }
-
+        {/* handleClick={ this.handleClick }
+          btnName="Jogar novamente"
+          dataName="btn-play-again" */}
         <Button
-
           handleClick={ () => this.handleClick('/') }
           btnName="Jogar novamente"
           dataName="btn-play-again"
@@ -45,13 +44,6 @@ class Feedback extends React.Component {
           dataName="btn-ranking"
         />
 
-          // handleClick={ this.handleClick }
-          // btnName="Jogar novamente"
-          // dataName="btn-play-again"
-        />
-
-      </>
-
         <div>
           <h2>Placar total:</h2>
           <h2 data-testid="feedback-total-score">{ score }</h2>
@@ -61,7 +53,6 @@ class Feedback extends React.Component {
           <h2 data-testid="feedback-total-question">{ assertions }</h2>
         </div>
       </div>
-
     );
   }
 }
