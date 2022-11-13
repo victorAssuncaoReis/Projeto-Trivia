@@ -9,11 +9,17 @@ class Feedback extends React.Component {
     scoreCuttOff: 3,
   };
 
-  handleClick = (route) => {
+
+   handleClick = (route) => {
     const { history } = this.props;
 
     history.push(route);
+
   };
+  
+    // handleClick = () => {
+    // const { history } = this.props;
+    // history.push('/');
 
   render() {
     const { assertions, score } = this.props;
@@ -28,6 +34,7 @@ class Feedback extends React.Component {
         }
 
         <Button
+
           handleClick={ () => this.handleClick('/') }
           btnName="Jogar novamente"
           dataName="btn-play-again"
@@ -37,6 +44,12 @@ class Feedback extends React.Component {
           btnName="Ranking"
           dataName="btn-ranking"
         />
+
+          // handleClick={ this.handleClick }
+          // btnName="Jogar novamente"
+          // dataName="btn-play-again"
+        />
+
       </>
 
         <div>
@@ -55,7 +68,6 @@ class Feedback extends React.Component {
 
 Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
-
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
