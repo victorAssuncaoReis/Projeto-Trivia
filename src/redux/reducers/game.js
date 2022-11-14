@@ -1,6 +1,4 @@
 const INITIAL_STATE = {
-  assertions: 0,
-  score: 0,
   counter: 30,
   isRunning: true,
 };

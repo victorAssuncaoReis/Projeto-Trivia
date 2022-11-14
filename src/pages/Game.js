@@ -12,6 +12,7 @@ class Game extends React.Component {
     changeClass: false,
     isButtonDisabled: false,
     counter: 30,
+    myInterval: '',
   };
 
   componentDidMount() {
@@ -21,31 +22,25 @@ class Game extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.stopTimer(prevState);
+    if (prevState.counter === 1) {
+      this.setState({ isButtonDisabled: true });
+      this.stopTimer();
+    }
   }
 
   myTimer = () => {
-    const oneSecond = 1000;
-    return setInterval(() => {
-      this.setState((prevState) => ({ counter: prevState.counter - 1 }));
-    }, oneSecond);
+    this.setState((prevState) => ({ counter: prevState.counter - 1 }));
   };
 
   setTimer = () => {
-    const { counter } = this.state;
-    if (counter > 0) {
-      this.myTimer();
-      console.log('chamou setTimer');
-    }
-    clearInterval(this.myTimer());
+    const oneSecond = 1000;
+    const myInterval = setInterval(this.myTimer, oneSecond);
+    this.setState({ myInterval });
   };
 
-  stopTimer = (prevState) => {
-    if (prevState.counter === 1) {
-      this.setState({ isButtonDisabled: true });
-    }
-    clearInterval(this.myTimer());
-    console.log('chamoufuncStopTimer linha 42');
+  stopTimer = () => {
+    const { myInterval } = this.state;
+    clearInterval(myInterval);
   };
 
   getQuestions = async (token) => {
@@ -76,10 +71,8 @@ class Game extends React.Component {
   }; // https://javascript.info/task/shuffle
 
   handleClick = () => {
-    this.setState({
-      changeClass: true,
-      isButtonDisabled: true,
-    });
+    this.stopTimer();
+    this.setState({ changeClass: true, isButtonDisabled: true });
   };
 
   render() {
@@ -139,4 +132,5 @@ class Game extends React.Component {
     );
   }
 }
+
 export default Game;
