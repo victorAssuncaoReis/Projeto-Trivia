@@ -15,6 +15,7 @@ class Game extends React.Component {
     answers: [],
     changeClass: false,
     isButtonDisabled: false,
+    nextBtn: false,
   };
 
   componentDidMount() {
@@ -22,9 +23,14 @@ class Game extends React.Component {
     this.getQuestions(token);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.counter === 1) {
       this.setState({ isButtonDisabled: true });
+    }
+    const { index } = this.state;
+    if (prevState.index !== index) {
+      const token = localStorage.getItem('token');
+      this.getQuestions(token);
     }
   }
 
@@ -44,6 +50,8 @@ class Game extends React.Component {
         answers: [...trivia[index]
           .incorrect_answers, trivia[index].correct_answer],
         changeClass: false,
+        isButtonDisabled: false,
+        nextBtn: false,
       }, () => this.shuffleAnswers());
     }
   };
@@ -58,7 +66,9 @@ class Game extends React.Component {
   handleClick = ({ target: { id } }) => {
     const { myInterval, dispatch, counter } = this.props;
     clearInterval(myInterval);
-    this.setState({ changeClass: true, isButtonDisabled: true });
+    this.setState({ changeClass: true,
+      isButtonDisabled: true,
+      nextBtn: true });
     if (id === 'correctAnswer') {
       dispatch(saveAssertions(1));
       const { questions: { difficulty } } = this.state;
@@ -74,17 +84,16 @@ class Game extends React.Component {
     }
   };
 
+  handleClickNext = () => {
+    this.setState(
+      (prevState) => ({ index: prevState.index + 1, loading: true }),
+      () => this.componentDidUpdate,
+    );
+  };
+
   render() {
-    const {
-      loading,
-      answers,
-      changeClass,
-      isButtonDisabled,
-      questions: {
-        category,
-        question,
-        correct_answer: correctAnswer,
-      },
+    const { loading, answers, changeClass, isButtonDisabled, nextBtn,
+      questions: { category, question, correct_answer: correctAnswer },
     } = this.state;
     return (
       <>
@@ -123,6 +132,13 @@ class Game extends React.Component {
                     )
                 ))}
               </div>
+              { nextBtn
+              && <Button
+                btnClass="next"
+                dataName="btn-next"
+                handleClick={ this.handleClickNext }
+                btnName="Próxima"
+              />}
             </>
           )}
       </>
@@ -131,6 +147,7 @@ class Game extends React.Component {
 }
 
 Game.propTypes = {
+  dispatch: PropTypes.func,
   counter: PropTypes.number,
 }.isRequired;
 
