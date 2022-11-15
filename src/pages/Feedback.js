@@ -9,15 +9,14 @@ class Feedback extends React.Component {
     scoreCuttOff: 3,
   };
 
-  handleClick = (route) => {
-    const { history } = this.props;
-
-    history.push(route);
+  handleClickLogin = (route) => {
+    window.location.replace(route);
   };
 
-  // handleClick = () => {
-  // const { history } = this.props;
-  // history.push('/');
+  handleClickRanking = (route) => {
+    const { history } = this.props;
+    history.push(route);
+  };
 
   render() {
     const { assertions, score } = this.props;
@@ -25,50 +24,37 @@ class Feedback extends React.Component {
     return (
       <div>
         <Header />
-        {
-          assertions < scoreCuttOff
-            ? (<h2 data-testid="feedback-text">Could be better...</h2>)
-            : (<h2 data-testid="feedback-text">Well Done!</h2>)
-        }
-        {/* handleClick={ this.handleClick }
-          btnName="Jogar novamente"
-          dataName="btn-play-again" */}
+        <h2 data-testid="feedback-text">
+          { assertions < scoreCuttOff ? 'Could be better...' : 'Well Done!'}
+        </h2>
+        <p data-testid="feedback-total-question">{assertions}</p>
+        <p data-testid="feedback-total-score">{score}</p>
         <Button
-          handleClick={ () => this.handleClick('/') }
-          btnName="Jogar novamente"
           dataName="btn-play-again"
+          handleClick={ () => this.handleClickLogin('/') }
+          btnName="Jogar novamente"
         />
         <Button
-          handleClick={ () => this.handleClick('/ranking') }
-          btnName="Ranking"
           dataName="btn-ranking"
+          handleClick={ () => this.handleClickRanking('/ranking') }
+          btnName="Ranking"
         />
-
-        <div>
-          <h2>Placar total:</h2>
-          <h2 data-testid="feedback-total-score">{ score }</h2>
-        </div>
-        <div>
-          <h2>Respostas corretas:</h2>
-          <h2 data-testid="feedback-total-question">{ assertions }</h2>
-        </div>
       </div>
     );
   }
 }
 
 Feedback.propTypes = {
-  assertions: PropTypes.number.isRequired,
+  score: PropTypes.number,
+  assertions: PropTypes.number,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
-  score: PropTypes.number.isRequired,
-
-};
+}.isRequired;
 
 const mapStateToProps = (state) => ({
-  assertions: state.player.assertions,
   score: state.player.score,
+  assertions: state.player.assertions,
 });
 
 export default connect(mapStateToProps)(Feedback);

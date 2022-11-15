@@ -12,7 +12,6 @@ class Header extends Component {
     const { gravatarEmail } = this.props;
     const hash = md5(gravatarEmail).toString();
     const formating = `https://www.gravatar.com/avatar/${hash}`;
-
     this.setState({ formatedEmail: formating });
   }
 
@@ -26,8 +25,8 @@ class Header extends Component {
           src={ formatedEmail }
           alt="user gravatar"
         />
-        <h2 data-testid="header-player-name">{ name }</h2>
-        <h2 data-testid="header-score">{`Score: ${score}`}</h2>
+        <p data-testid="header-player-name">{ name }</p>
+        <p data-testid="header-score">{score}</p>
       </div>
     );
   }
