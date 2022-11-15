@@ -2,24 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from '../components/Button';
-import { fetchApi, saveLoginName, saveLoginEmail } from '../redux/actions';
+import { saveLogin } from '../redux/actions';
 
 class Login extends React.Component {
   state = {
-    email: '',
     name: '',
+    email: '',
     isDisabled: true,
   };
 
-  validEmail = () => {
-    const { email } = this.state;
-    const regexValidation = /\S+@\S+\.\S+/;
-    return regexValidation.test(email);
-  };
-
   validateEntry = () => {
-    const { name } = this.state;
-    if (this.validEmail() && name.length > 0) {
+    const { name, email } = this.state;
+    const regexValidation = /\S+@\S+\.\S+/;
+    const checkEmail = regexValidation.test(email);
+    if (checkEmail && name.length > 0) {
       this.setState({ isDisabled: false });
     } else {
       this.setState({ isDisabled: true });
@@ -28,9 +24,7 @@ class Login extends React.Component {
 
   handleChange = ({ target }) => {
     const { name, value } = target;
-    this.setState({
-      [name]: value,
-    }, () => this.validateEntry());
+    this.setState({ [name]: value }, () => this.validateEntry());
   };
 
   handleClickSettings = () => {
@@ -38,15 +32,26 @@ class Login extends React.Component {
     history.push('/settings');
   };
 
-  handleClickGame = () => {
+  handleClickGame = async () => {
     const { dispatch, history } = this.props;
     const { name, email } = this.state;
-    dispatch(fetchApi());
-    dispatch(saveLoginName(name));
-    console.log(name); // OK
-    console.log('fez dispatch da saveLoginName'); // OK
-    dispatch(saveLoginEmail(email));
-    history.push('/game');
+
+    // dispatch(fetchApi());
+    // dispatch(saveLoginName(name));
+    // dispatch(saveLoginEmail(email));
+    // history.push('/game');
+
+    dispatch(saveLogin({ name, email }));
+    try {
+      const url = 'https://opentdb.com/api_token.php?command=request';
+      const response = await fetch(url);
+      const data = await response.json();
+      const token = await data.token;
+      localStorage.setItem('token', token);
+      history.push('/game');
+    } catch (error) {
+      return error;
+    }
   };
 
   render() {

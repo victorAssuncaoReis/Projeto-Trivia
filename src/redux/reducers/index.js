@@ -1,10 +1,7 @@
 import { combineReducers } from 'redux';
 import player from './player';
-import token from './token';
+import game from './game';
 
-const reducer = combineReducers({
-  player,
-  token,
-});
+const reducer = combineReducers({ player, game });
 
 export default reducer;

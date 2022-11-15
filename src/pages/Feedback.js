@@ -1,15 +1,74 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import Button from '../components/Button';
 
 class Feedback extends React.Component {
+  state = {
+    scoreCuttOff: 3,
+  };
+
+  handleClick = (route) => {
+    const { history } = this.props;
+
+    history.push(route);
+  };
+
+  // handleClick = () => {
+  // const { history } = this.props;
+  // history.push('/');
+
   render() {
+    const { assertions, score } = this.props;
+    const { scoreCuttOff } = this.state;
     return (
       <div>
         <Header />
-        <h1>FEEDBACK</h1>
+        {
+          assertions < scoreCuttOff
+            ? (<h2 data-testid="feedback-text">Could be better...</h2>)
+            : (<h2 data-testid="feedback-text">Well Done!</h2>)
+        }
+        {/* handleClick={ this.handleClick }
+          btnName="Jogar novamente"
+          dataName="btn-play-again" */}
+        <Button
+          handleClick={ () => this.handleClick('/') }
+          btnName="Jogar novamente"
+          dataName="btn-play-again"
+        />
+        <Button
+          handleClick={ () => this.handleClick('/ranking') }
+          btnName="Ranking"
+          dataName="btn-ranking"
+        />
+
+        <div>
+          <h2>Placar total:</h2>
+          <h2 data-testid="feedback-total-score">{ score }</h2>
+        </div>
+        <div>
+          <h2>Respostas corretas:</h2>
+          <h2 data-testid="feedback-total-question">{ assertions }</h2>
+        </div>
       </div>
     );
   }
 }
 
-export default Feedback;
+Feedback.propTypes = {
+  assertions: PropTypes.number.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  score: PropTypes.number.isRequired,
+
+};
+
+const mapStateToProps = (state) => ({
+  assertions: state.player.assertions,
+  score: state.player.score,
+});
+
+export default connect(mapStateToProps)(Feedback);
