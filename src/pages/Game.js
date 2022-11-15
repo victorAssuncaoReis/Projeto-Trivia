@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
+import Timer from '../components/Timer';
 import Button from '../components/Button';
 import './game.css';
 
@@ -11,37 +14,18 @@ class Game extends React.Component {
     answers: [],
     changeClass: false,
     isButtonDisabled: false,
-    counter: 30,
-    myInterval: '',
   };
 
   componentDidMount() {
     const token = localStorage.getItem('token');
     this.getQuestions(token);
-    this.setTimer();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.counter === 1) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.counter === 1) {
       this.setState({ isButtonDisabled: true });
-      this.stopTimer();
     }
   }
-
-  myTimer = () => {
-    this.setState((prevState) => ({ counter: prevState.counter - 1 }));
-  };
-
-  setTimer = () => {
-    const oneSecond = 1000;
-    const myInterval = setInterval(this.myTimer, oneSecond);
-    this.setState({ myInterval });
-  };
-
-  stopTimer = () => {
-    const { myInterval } = this.state;
-    clearInterval(myInterval);
-  };
 
   getQuestions = async (token) => {
     const { index } = this.state;
@@ -71,7 +55,8 @@ class Game extends React.Component {
   }; // https://javascript.info/task/shuffle
 
   handleClick = () => {
-    this.stopTimer();
+    const { myInterval } = this.props;
+    clearInterval(myInterval);
     this.setState({ changeClass: true, isButtonDisabled: true });
   };
 
@@ -81,7 +66,6 @@ class Game extends React.Component {
       answers,
       changeClass,
       isButtonDisabled,
-      counter,
       questions: {
         category,
         question,
@@ -97,10 +81,7 @@ class Game extends React.Component {
             <>
               <h3 data-testid="question-category">{category}</h3>
               <p data-testid="question-text">{question}</p>
-              <h3>
-                Tempo restante:
-                {counter}
-              </h3>
+              <Timer />
               <div data-testid="answer-options">
                 { answers.map((el, i) => (
                   el === correctAnswer
@@ -133,4 +114,13 @@ class Game extends React.Component {
   }
 }
 
-export default Game;
+Game.propTypes = {
+  counter: PropTypes.number,
+}.isRequired;
+
+const mapStateToProps = (state) => ({
+  myInterval: state.game.myInterval,
+  counter: state.game.counter,
+});
+
+export default connect(mapStateToProps)(Game);
