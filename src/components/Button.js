@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 
 class Button extends React.Component {
   render() {
-    const { handleClick, btnName, disabled, dataName, btnClass } = this.props;
+    const { btnClass, dataName, id, disabled, handleClick, btnName } = this.props;
     return (
       <button
-        type="button"
         className={ `btn-${btnClass}` }
+        type="button"
+        data-testid={ dataName }
+        id={ id }
         disabled={ disabled }
         onClick={ handleClick }
-        data-testid={ dataName }
       >
         {btnName}
       </button>
@@ -19,18 +20,20 @@ class Button extends React.Component {
 }
 
 Button.propTypes = {
+  btnClass: PropTypes.string,
+  dataName: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  disabled: PropTypes.bool,
   handleClick: PropTypes.func,
   btnName: PropTypes.node,
-  disabled: PropTypes.bool,
-  dataName: PropTypes.string.isRequired,
-  btnClass: PropTypes.string,
 };
 
 Button.defaultProps = {
+  btnClass: '',
+  id: '',
+  disabled: false,
   handleClick: () => {},
   btnName: null,
-  disabled: false,
-  btnClass: '',
 };
 
 export default Button;

@@ -38,7 +38,7 @@ class Timer extends React.Component {
     const { counter } = this.props;
     return (
       <h3>
-        Tempo restante:
+        Tempo:
         {counter}
       </h3>
     );
