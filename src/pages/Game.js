@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Timer from '../components/Timer';
 import Button from '../components/Button';
+import { saveScore, saveAssertions } from '../redux/actions';
 import './game.css';
 
 class Game extends React.Component {
@@ -54,10 +55,23 @@ class Game extends React.Component {
     this.setState({ answers: mix });
   }; // https://javascript.info/task/shuffle
 
-  handleClick = () => {
-    const { myInterval } = this.props;
+  handleClick = ({ target: { id } }) => {
+    const { myInterval, dispatch, counter } = this.props;
     clearInterval(myInterval);
     this.setState({ changeClass: true, isButtonDisabled: true });
+    if (id === 'correctAnswer') {
+      dispatch(saveAssertions(1));
+      const { questions: { difficulty } } = this.state;
+      const fixeNumber = 10;
+      const hardScore = 3;
+      if (difficulty === 'easy') {
+        dispatch(saveScore(fixeNumber + (counter * 1)));
+      } else if (difficulty === 'medium') {
+        dispatch(saveScore(fixeNumber + (counter * 2)));
+      } else {
+        dispatch(saveScore(fixeNumber + (counter * hardScore)));
+      }
+    }
   };
 
   render() {
@@ -89,20 +103,22 @@ class Game extends React.Component {
                       <Button
                         btnClass={ changeClass ? 'right' : 'gray' }
                         key={ i }
-                        btnName={ el }
+                        id="correctAnswer"
+                        disabled={ isButtonDisabled }
                         dataName="correct-answer"
                         handleClick={ this.handleClick }
-                        disabled={ isButtonDisabled }
+                        btnName={ el }
                       />
                     )
                     : (
                       <Button
                         btnClass={ changeClass ? 'wrong' : 'gray' }
                         key={ i }
-                        btnName={ el }
+                        id="incorrectAnswer"
+                        disabled={ isButtonDisabled }
                         dataName={ `wrong-answer-${i}` }
                         handleClick={ this.handleClick }
-                        disabled={ isButtonDisabled }
+                        btnName={ el }
                       />
                     )
                 ))}
