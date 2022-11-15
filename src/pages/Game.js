@@ -28,9 +28,15 @@ class Game extends React.Component {
       this.setState({ isButtonDisabled: true });
     }
     const { index } = this.state;
+    const { history } = this.props;
+    const magicNumber = 5;
     if (prevState.index !== index) {
-      const token = localStorage.getItem('token');
-      this.getQuestions(token);
+      if (index < magicNumber) {
+        const token = localStorage.getItem('token');
+        this.getQuestions(token);
+      } else {
+        history.push('/feedback');
+      }
     }
   }
 
@@ -149,6 +155,9 @@ class Game extends React.Component {
 Game.propTypes = {
   dispatch: PropTypes.func,
   counter: PropTypes.number,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
 }.isRequired;
 
 const mapStateToProps = (state) => ({

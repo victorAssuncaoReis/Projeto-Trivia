@@ -1,59 +1,60 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Header from '../components/Header';
-
-const tres = 3;
-const quinze = 15;
+import md5 from 'crypto-js/md5';
+import Button from '../components/Button';
 
 class Ranking extends React.Component {
-  onClick = () => {
-    const { history } = this.props;
-    history.push('/');
+  state = {
+    formatedEmail: '',
+    index: 0,
+  };
+
+  componentDidMount() {
+    const { gravatarEmail } = this.props;
+    const hash = md5(gravatarEmail).toString();
+    const formating = `https://www.gravatar.com/avatar/${hash}`;
+    this.setState({ formatedEmail: formating });
+  }
+
+  handleClick = () => {
+    window.location.replace('/');
   };
 
   render() {
-    // ORDENANDO EM ORDEM DESCRESCENTE
-    const points = [quinze, 100, 1, 0, tres, 100, 1];
-    const order = () => points.sort((a, b) => a - b);
-    console.log(order());
-    const numbers = order();
-    // ===============================
     const { name, score } = this.props;
+    const { formatedEmail, index } = this.state;
     return (
       <div>
         <h1 data-testid="ranking-title">Ranking</h1>
-        <Header />
-        <button
-          type="button"
-          onClick={ this.onClick }
-          data-testid="btn-go-home"
-        >
-          HOME
-        </button>
-        <h2>
+        <img
+          src={ formatedEmail }
+          alt="user gravatar"
+        />
+        <p data-testid={ `player-name-${index}` }>
           { name }
-        </h2>
-        <h2>
+        </p>
+        <p data-testid={ `player-score-${index}` }>
           { score }
-        </h2>
-        <h3>{ numbers }</h3>
+        </p>
+        <Button
+          dataName="btn-go-home"
+          handleClick={ this.handleClick }
+          btnName="Jogar novamente"
+        />
       </div>
     );
   }
 }
 
 Ranking.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-  score: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-};
+  name: PropTypes.string,
+  score: PropTypes.number,
+}.isRequired;
 
 const mapStateToProps = (state) => ({
   name: state.player.name,
-  pontos: state.player.score,
+  score: state.player.score,
 });
 
 export default connect(mapStateToProps)(Ranking);
