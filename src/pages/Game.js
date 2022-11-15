@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
+import Timer from '../components/Timer';
 import Button from '../components/Button';
 import './game.css';
 
@@ -10,11 +13,18 @@ class Game extends React.Component {
     questions: [],
     answers: [],
     changeClass: false,
+    isButtonDisabled: false,
   };
 
   componentDidMount() {
     const token = localStorage.getItem('token');
     this.getQuestions(token);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.counter === 1) {
+      this.setState({ isButtonDisabled: true });
+    }
   }
 
   getQuestions = async (token) => {
@@ -45,7 +55,9 @@ class Game extends React.Component {
   }; // https://javascript.info/task/shuffle
 
   handleClick = () => {
-    this.setState({ changeClass: true });
+    const { myInterval } = this.props;
+    clearInterval(myInterval);
+    this.setState({ changeClass: true, isButtonDisabled: true });
   };
 
   render() {
@@ -53,6 +65,7 @@ class Game extends React.Component {
       loading,
       answers,
       changeClass,
+      isButtonDisabled,
       questions: {
         category,
         question,
@@ -68,6 +81,7 @@ class Game extends React.Component {
             <>
               <h3 data-testid="question-category">{category}</h3>
               <p data-testid="question-text">{question}</p>
+              <Timer />
               <div data-testid="answer-options">
                 { answers.map((el, i) => (
                   el === correctAnswer
@@ -78,6 +92,7 @@ class Game extends React.Component {
                         btnName={ el }
                         dataName="correct-answer"
                         handleClick={ this.handleClick }
+                        disabled={ isButtonDisabled }
                       />
                     )
                     : (
@@ -87,6 +102,7 @@ class Game extends React.Component {
                         btnName={ el }
                         dataName={ `wrong-answer-${i}` }
                         handleClick={ this.handleClick }
+                        disabled={ isButtonDisabled }
                       />
                     )
                 ))}
@@ -97,4 +113,14 @@ class Game extends React.Component {
     );
   }
 }
-export default Game;
+
+Game.propTypes = {
+  counter: PropTypes.number,
+}.isRequired;
+
+const mapStateToProps = (state) => ({
+  myInterval: state.game.myInterval,
+  counter: state.game.counter,
+});
+
+export default connect(mapStateToProps)(Game);
