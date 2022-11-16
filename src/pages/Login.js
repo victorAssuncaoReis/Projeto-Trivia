@@ -53,11 +53,6 @@ class Login extends React.Component {
 
     return (
       <section className="login">
-        <Button
-          btnName="Configurações"
-          dataName="btn-settings"
-          handleClick={ this.handleClickSettings }
-        />
         <input
           type="email"
           name="email"
@@ -79,6 +74,11 @@ class Login extends React.Component {
           btnName="Jogar"
           dataName="btn-play"
           handleClick={ this.handleClickGame }
+        />
+        <Button
+          btnName="Configurações"
+          dataName="btn-settings"
+          handleClick={ this.handleClickSettings }
         />
       </section>
     );

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { startTimer, getInterval, saveCounter } from '../redux/actions';
+import './Timer.css';
 
 class Timer extends React.Component {
   componentDidMount() {

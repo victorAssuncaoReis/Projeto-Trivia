@@ -1,0 +1,50 @@
+.div-header {
+  background-color: white;
+  display: flex;
+  height: 16vh;
+  justify-content: flex-end;
+  position: relative;
+  width: 100vw;
+}
+
+.gravatar-image {
+  align-self: center;
+  border-radius: 18.14px;
+  height: 2.313em;
+  margin-right: 0.813em;
+  width: 2.313em;
+}
+
+.header-name {
+  align-self: center;
+  font-size: 16px;
+  margin-right: 1.349em;
+  width: 8.313em;
+}
+
+.star {
+  align-self: center;
+  height: 1.787em;
+  margin-right: 0.784em;
+  width: 1.868em;
+}
+
+.header-points {
+  align-self: center;
+  font-size: 16px;
+  margin-right: 0.2em;
+}
+
+.header-score {
+  align-self: center;
+  font-size: 16px;
+  font-weight: 700;
+  margin-right: 4.25em;
+}
+
+.settings {
+  align-self: center;
+  height: 2.036em;
+  margin-right: 8.492em;
+  width: 2.008em;
+}

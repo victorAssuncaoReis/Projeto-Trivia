@@ -2,11 +2,21 @@
 
 body {
   background-attachment: fixed;
+  background-color: rgb(60, 27, 122);
   background-image: url('./images/background.png');
   background-position: top;
   background-repeat: no-repeat;
   background-size: 100%;
   display: flex;
   font-family: sans-serif , Epilogue , Modern Antiqua , Helvetica , Arial , Verdana;
+  margin: 0;
   min-height: 97vh;
+}
+
+button:hover {
+  filter: brightness(140%);
+}
+
+button:disabled {
+  opacity: 0.5;
 }

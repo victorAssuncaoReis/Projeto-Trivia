@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Button from '../components/Button';
-import LogoTrivia from '../images/LogoTrivia.png';
-import './feedback.css';
+import LogoFeed from '../images/LogoFeed.png';
+import './Feedback.css';
 
 class Feedback extends React.Component {
   state = {
     scoreCuttOff: 3,
-    changeClass: good,
+    changeClass: 'good',
   };
 
   componentDidMount() {
@@ -28,36 +28,42 @@ class Feedback extends React.Component {
   changeClass = () => {
     const { scoreCuttOff } = this.state;
     const magicNumber = 3;
-    if (scoreCuttOff < magicNumber) {
-      this.setState({ changeClass: bad });
-    } this.setState({ changeClass: good });
+    if (scoreCuttOff >= magicNumber) {
+      this.setState({ changeClass: 'good' });
+    } this.setState({ changeClass: 'bad' });
   };
 
   render() {
     const { assertions, score } = this.props;
     const { scoreCuttOff, changeClass } = this.state;
     return (
-      <div className="div-feed">
+      <section className="sec-feed">
         <Header />
-        <img src={ LogoTrivia } alt="logo-trivia" />
-        <h2 className={ changeClass } data-testid="feedback-text">
-          { assertions < scoreCuttOff ? 'Could be better...' : 'Well Done!'}
-        </h2>
-        <p data-testid="feedback-total-question">{assertions}</p>
-        <p data-testid="feedback-total-score">{score}</p>
-        <Button
-          btnClass="play-again"
-          dataName="btn-play-again"
-          handleClick={ () => this.handleClickLogin('/') }
-          btnName="Jogar novamente"
-        />
-        <Button
-          btnClass="ranking"
-          dataName="btn-ranking"
-          handleClick={ () => this.handleClickRanking('/ranking') }
-          btnName="Ver Ranking"
-        />
-      </div>
+        <div className="div-feed">
+          <img className="logo-feed" src={ LogoFeed } alt="logo-trivia" />
+          <div className="container-feed">
+            <h2 className={ changeClass } data-testid="feedback-text">
+              { assertions < scoreCuttOff ? 'Could be better...' : 'Well Done!'}
+            </h2>
+            <p data-testid="feedback-total-question">{assertions}</p>
+            <p data-testid="feedback-total-score">{score}</p>
+          </div>
+          <div>
+            <Button
+              btnClass="ranking"
+              dataName="btn-ranking"
+              handleClick={ () => this.handleClickRanking('/ranking') }
+              btnName="Ver Ranking"
+            />
+            <Button
+              btnClass="play-again"
+              dataName="btn-play-again"
+              handleClick={ () => this.handleClickLogin('/') }
+              btnName="Jogar novamente"
+            />
+          </div>
+        </div>
+      </section>
     );
   }
 }

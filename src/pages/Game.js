@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import Timer from '../components/Timer';
 import Button from '../components/Button';
 import { saveScore, saveAssertions } from '../redux/actions';
-import './game.css';
+import './Game.css';
 
 class Game extends React.Component {
   state = {
@@ -25,7 +25,7 @@ class Game extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.counter === 1) {
-      this.setState({ isButtonDisabled: true });
+      this.setState({ isButtonDisabled: true, nextBtn: true });
     }
     const { index } = this.state;
     const { history } = this.props;
