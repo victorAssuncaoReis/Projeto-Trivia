@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { startTimer, getInterval, saveCounter } from '../redux/actions';
+import Clock from '../images/Clock.png';
 import './Timer.css';
 
 class Timer extends React.Component {
@@ -38,9 +39,10 @@ class Timer extends React.Component {
   render() {
     const { counter } = this.props;
     return (
-      <h3>
-        Tempo:
-        {counter}
+      <h3 className="timer">
+        <img src={ Clock } alt="relógio vermelho" />
+        {` Tempo: 
+          ${counter} s`}
       </h3>
     );
   }
