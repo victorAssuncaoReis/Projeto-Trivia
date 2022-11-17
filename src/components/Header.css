@@ -3,7 +3,7 @@
   display: flex;
   height: 16vh;
   justify-content: flex-end;
-  position: relative;
+  position: absolute;
   width: 100vw;
 }
 
@@ -18,8 +18,8 @@
 .header-name {
   align-self: center;
   font-size: 16px;
-  margin-right: 1.349em;
-  width: 8.313em;
+  margin-right: 0.5em;
+  width: 6.313em;
 }
 
 .star {
@@ -45,6 +45,6 @@
 .settings {
   align-self: center;
   height: 2.036em;
-  margin-right: 8.492em;
+  margin-right: 6.492em;
   width: 2.008em;
 }

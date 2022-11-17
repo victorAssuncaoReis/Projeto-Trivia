@@ -9,7 +9,7 @@ import './Feedback.css';
 class Feedback extends React.Component {
   state = {
     scoreCuttOff: 3,
-    changeClass: 'good',
+    changeClass: '',
   };
 
   componentDidMount() {
@@ -27,26 +27,46 @@ class Feedback extends React.Component {
 
   changeClass = () => {
     const { scoreCuttOff } = this.state;
-    const magicNumber = 3;
-    if (scoreCuttOff >= magicNumber) {
-      this.setState({ changeClass: 'good' });
-    } this.setState({ changeClass: 'bad' });
+    const { assertions } = this.props;
+    if (assertions < scoreCuttOff) {
+      this.setState({ changeClass: 'bad' });
+    } else { this.setState({ changeClass: 'good' }); }
   };
 
   render() {
-    const { assertions, score } = this.props;
+    const { assertions, score, gravatar } = this.props;
     const { scoreCuttOff, changeClass } = this.state;
     return (
       <section className="sec-feed">
         <Header />
         <div className="div-feed">
           <img className="logo-feed" src={ LogoFeed } alt="logo-trivia" />
+          <div className="div-gravatar">
+            <img
+              className={ `gravatar-${changeClass}` }
+              src={ gravatar }
+              alt="user gravatar"
+            />
+          </div>
           <div className="container-feed">
             <h2 className={ changeClass } data-testid="feedback-text">
               { assertions < scoreCuttOff ? 'Could be better...' : 'Well Done!'}
             </h2>
-            <p data-testid="feedback-total-question">{assertions}</p>
-            <p data-testid="feedback-total-score">{score}</p>
+            <div className="div-assertions">
+              <p>Você acertou</p>
+              <p
+                className="assertions"
+                data-testid="feedback-total-question"
+              >
+                {assertions}
+              </p>
+              <p>{assertions === 1 ? 'questão!' : 'questões!'}</p>
+            </div>
+            <div className="div-score">
+              <p>Um total de</p>
+              <p className="score" data-testid="feedback-total-score">{score}</p>
+              <p>pontos</p>
+            </div>
           </div>
           <div>
             <Button
@@ -71,6 +91,7 @@ class Feedback extends React.Component {
 Feedback.propTypes = {
   score: PropTypes.number,
   assertions: PropTypes.number,
+  gravatar: PropTypes.string,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
@@ -79,6 +100,7 @@ Feedback.propTypes = {
 const mapStateToProps = (state) => ({
   score: state.player.score,
   assertions: state.player.assertions,
+  gravatar: state.game.gravatar,
 });
 
 export default connect(mapStateToProps)(Feedback);

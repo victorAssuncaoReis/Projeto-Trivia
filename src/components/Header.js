@@ -5,6 +5,7 @@ import md5 from 'crypto-js/md5';
 import Star from '../images/Star.png';
 import Settings from '../images/Settings.png';
 import './Header.css';
+import { saveGravatar } from '../redux/actions';
 
 class Header extends Component {
   state = {
@@ -12,10 +13,11 @@ class Header extends Component {
   };
 
   componentDidMount() {
-    const { gravatarEmail } = this.props;
+    const { gravatarEmail, dispatch } = this.props;
     const hash = md5(gravatarEmail).toString();
     const formating = `https://www.gravatar.com/avatar/${hash}`;
     this.setState({ formatedEmail: formating });
+    dispatch(saveGravatar(formating));
   }
 
   render() {
@@ -43,6 +45,7 @@ Header.propTypes = {
   gravatarEmail: PropTypes.string,
   score: PropTypes.number,
   name: PropTypes.string,
+  dispatch: PropTypes.func,
 }.isRequired;
 
 const mapStateToProps = (state) => ({

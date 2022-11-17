@@ -1,8 +1,9 @@
-import { START_TIMER, GET_INTERVAL, SAVE_COUNTER } from '../actions';
+import { START_TIMER, GET_INTERVAL, SAVE_COUNTER, SAVE_GRAVATAR } from '../actions';
 
 const INITIAL_STATE = {
   counter: 30,
   myInterval: 0,
+  gravatar: '',
 };
 
 const game = (state = INITIAL_STATE, action) => {
@@ -13,6 +14,8 @@ const game = (state = INITIAL_STATE, action) => {
     return { ...state, counter: state.counter - action.payload };
   case GET_INTERVAL:
     return { ...state, myInterval: action.payload };
+  case SAVE_GRAVATAR:
+    return { ...state, gravatar: action.payload };
   default:
     return state;
   }

@@ -14,7 +14,7 @@ body {
 }
 
 button:hover {
-  filter: brightness(140%);
+  filter: brightness(110%);
 }
 
 button:disabled {
