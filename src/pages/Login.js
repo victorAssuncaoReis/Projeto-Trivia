@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from '../components/Button';
 import { saveLogin } from '../redux/actions';
+import LogoTrivia from '../images/LogoTrivia.png';
+import LogoTrybe from '../images/LogoTrybe.png';
+import './Login.css';
 
 class Login extends React.Component {
   state = {
@@ -52,34 +55,44 @@ class Login extends React.Component {
     const { email, name, isDisabled } = this.state;
 
     return (
-      <section className="login">
-        <input
-          type="email"
-          name="email"
-          onChange={ this.handleChange }
-          placeholder="Qual é o seu e-mail do Gravatar?"
-          data-testid="input-gravatar-email"
-          value={ email }
-        />
-        <input
-          type="name"
-          name="name"
-          onChange={ this.handleChange }
-          placeholder="Qual é o seu nome?"
-          data-testid="input-player-name"
-          value={ name }
-        />
-        <Button
-          disabled={ isDisabled }
-          btnName="Jogar"
-          dataName="btn-play"
-          handleClick={ this.handleClickGame }
-        />
-        <Button
-          btnName="Configurações"
-          dataName="btn-settings"
-          handleClick={ this.handleClickSettings }
-        />
+      <section className="sec-login">
+        <div className="div-login">
+          <img className="logo-login" src={ LogoTrivia } alt="logo trivia" />
+          <div className="container-login">
+            <input
+              className="input-email"
+              type="email"
+              name="email"
+              onChange={ this.handleChange }
+              placeholder="Qual é o seu e-mail do Gravatar?"
+              data-testid="input-gravatar-email"
+              value={ email }
+            />
+            <input
+              className="input-name"
+              type="name"
+              name="name"
+              onChange={ this.handleChange }
+              placeholder="Qual é o seu nome?"
+              data-testid="input-player-name"
+              value={ name }
+            />
+            <Button
+              btnClass="play"
+              disabled={ isDisabled }
+              btnName="Jogar"
+              dataName="btn-play"
+              handleClick={ this.handleClickGame }
+            />
+            <Button
+              btnClass="settings"
+              btnName="Configurações"
+              dataName="btn-settings"
+              handleClick={ this.handleClickSettings }
+            />
+          </div>
+          <img className="logo-trybe-login" src={ LogoTrybe } alt="logo da trybe" />
+        </div>
       </section>
     );
   }

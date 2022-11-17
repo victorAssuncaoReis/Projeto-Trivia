@@ -1,0 +1,88 @@
+.sec-login {
+  display: flex;
+  height: 97vh;
+  justify-content: center;
+  width: 100vw;
+}
+
+.div-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logo-login {
+  align-self: center;
+  height: 14.454em;
+  margin-bottom: 0.748em;
+  width: 14.375em;
+}
+
+.container-login {
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 16.625em;
+  justify-content: space-evenly;
+  width: 38.375em;
+}
+
+.input-email {
+  align-self: center;
+  border: 1px solid gray;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 400;
+  height: 2.813em;
+  margin-top: 1em;
+  padding-left: 14px;
+  padding-right: 14px;
+  width: 34.4em;
+}
+
+.input-name {
+  align-self: center;
+  border: 1px solid gray;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 400;
+  height: 2.813em;
+  padding-left: 14px;
+  padding-right: 14px;
+  width: 34.4em;
+}
+
+.btn-play {
+  align-self: center;
+  background-color: rgb(47, 193, 140);
+  border-radius: 5px;
+  border-style: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  height: 2.813em;
+  text-transform: uppercase;
+  width: 32.438em;
+}
+
+.btn-settings {
+  align-self: center;
+  background-color: rgb(0, 213, 226);
+  border-radius: 5px;
+  border-style: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  height: 2.813em;
+  margin-bottom: 1em;
+  text-transform: uppercase;
+  width: 32.438em;
+}
+
+.logo-trybe-login {
+  align-self: center;
+  height: 3.238em;
+  margin-top: 2.25em;
+  width: 2.834em;
+}
