@@ -42,7 +42,7 @@ class Timer extends React.Component {
       <h3 className="timer">
         <img src={ Clock } alt="relógio vermelho" />
         {` Tempo: 
-          ${counter} s`}
+          ${counter}s`}
       </h3>
     );
   }

@@ -5,6 +5,8 @@ import Header from '../components/Header';
 import Timer from '../components/Timer';
 import Button from '../components/Button';
 import { saveScore, saveAssertions } from '../redux/actions';
+import LogoTrivia from '../images/LogoTrivia.png';
+import LogoTrybe from '../images/LogoTrybe.png';
 import './Game.css';
 
 class Game extends React.Component {
@@ -102,16 +104,29 @@ class Game extends React.Component {
       questions: { category, question, correct_answer: correctAnswer },
     } = this.state;
     return (
-      <>
+      <section className="sec-game">
         <Header />
         { loading
-          ? <h1>Carregando...</h1>
+          ? <h1 className="loading">Carregando...</h1>
           : (
-            <>
-              <h3 data-testid="question-category">{category}</h3>
-              <p data-testid="question-text">{question}</p>
-              <Timer />
-              <div data-testid="answer-options">
+            <div className="div-game">
+              <div className="div-infos">
+                <img className="logo-game" src={ LogoTrivia } alt="logo trivia" />
+                <div className="div-question">
+                  <div className="div-category">
+                    <h3
+                      className="category"
+                      data-testid="question-category"
+                    >
+                      {category}
+                    </h3>
+                  </div>
+                  <p className="question" data-testid="question-text">{question}</p>
+                  <Timer />
+                </div>
+                <img className="logo-trybe-game" src={ LogoTrybe } alt="logo da trybe" />
+              </div>
+              <div className="buttons" data-testid="answer-options">
                 { answers.map((el, i) => (
                   el === correctAnswer
                     ? (
@@ -137,17 +152,17 @@ class Game extends React.Component {
                       />
                     )
                 ))}
-              </div>
-              { nextBtn
+                { nextBtn
               && <Button
                 btnClass="next"
                 dataName="btn-next"
                 handleClick={ this.handleClickNext }
                 btnName="Próxima"
               />}
-            </>
+              </div>
+            </div>
           )}
-      </>
+      </section>
     );
   }
 }

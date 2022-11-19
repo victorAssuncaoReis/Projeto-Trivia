@@ -1,3 +1,77 @@
+.sec-game {
+  display: flex;
+  height: 97vh;
+  width: 100vw;
+}
+
+.div-game {
+  align-self: center;
+  display: flex;
+}
+
+.div-infos {
+  display: flex;
+  flex-direction: column;
+  margin-left: 6em;
+  margin-right: 10em;
+}
+
+.logo-game {
+  align-self: center;
+  height: 13.875em;
+  margin-bottom: 2em;
+  position: relative;
+  width: 12.318em;
+}
+
+.div-category {
+  align-self: center;
+  background-color: rgb(0, 213, 226);
+  border-radius: 100px;
+  display: flex;
+  height: 2.813em;
+  justify-content: center;
+  width: 25.813em;
+}
+
+.category {
+  align-self: center;
+  color: white;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.div-question {
+  align-self: center;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 17.875em;
+  justify-content: space-between;
+  width: 27.438em;
+}
+
+.question {
+  align-self: center;
+  font-size: 1em;
+  font-weight: 400;
+}
+
+.logo-trybe-game {
+  align-self: center;
+  height: 2.641em;
+  margin-top: 2.25em;
+  width: 2.313em;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-top: 10em;
+}
+
 .btn-gray {
   background-color: white;
   border: 3px solid black;
@@ -18,7 +92,18 @@
   background-color: white;
   border: 3px solid red;
   border-radius: 100px;
-  box-shadow: 2px;
   height: 64px;
   width: 519px;
+}
+
+.btn-next {
+  background-color: rgb(47, 193, 140);
+  border-radius: 5px;
+  border-style: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  height: 2.813em;
+  text-transform: uppercase;
+  width: 32.438em;
 }
