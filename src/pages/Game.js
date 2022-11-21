@@ -126,7 +126,7 @@ class Game extends React.Component {
                 </div>
                 <img className="logo-trybe-game" src={ LogoTrybe } alt="logo da trybe" />
               </div>
-              <div className="buttons" data-testid="answer-options">
+              <aside className="buttons" data-testid="answer-options">
                 { answers.map((el, i) => (
                   el === correctAnswer
                     ? (
@@ -159,7 +159,7 @@ class Game extends React.Component {
                 handleClick={ this.handleClickNext }
                 btnName="Próxima"
               />}
-              </div>
+              </aside>
             </div>
           )}
       </section>
